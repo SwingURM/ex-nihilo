@@ -82,8 +82,11 @@ public class TileEntitySieve extends TileEntity {
             final ArrayList<SiftingResult> rewards = SieveRegistry.getSiftingOutput(itemInfo, this.meshType);
             if (rewards != null && rewards.size() > 0) {
                 for (final SiftingResult reward : rewards) {
-                    if (this.worldObj.rand.nextInt(reward.rarity) == 0) {
-                        final EntityItem entityitem = new EntityItem(this.worldObj, this.xCoord + 0.5D, this.yCoord + 1.5D, this.zCoord + 0.5D, new ItemStack(reward.drop.getItem(), 1, reward.drop.getMeta()));
+                    // Skip rewards with null drops (unresolvable items)
+                    if (reward.drop == null) continue;
+                    int amount = calculateDropAmount(reward);
+                    if (amount > 0) {
+                        final EntityItem entityitem = new EntityItem(this.worldObj, this.xCoord + 0.5D, this.yCoord + 1.5D, this.zCoord + 0.5D, new ItemStack(reward.drop.getItem(), amount, reward.drop.getMeta()));
                         final double f3 = 0.05F;
                         entityitem.motionX = this.worldObj.rand.nextGaussian() * f3;
                         entityitem.motionY = 0.2D;
@@ -97,6 +100,27 @@ public class TileEntitySieve extends TileEntity {
 
         sendPacketUpdate();
 
+    }
+
+    private int calculateDropAmount(SiftingResult result) {
+        switch (result.type) {
+            case FIXED:
+                // Always drops the fixed amount
+                return result.paramN;
+            case BINOMIAL:
+                // Binomial distribution: n trials, each with probability p
+                int successes = 0;
+                for (int i = 0; i < result.paramN; i++) {
+                    if (this.worldObj.rand.nextFloat() < result.paramP) {
+                        successes++;
+                    }
+                }
+                return successes;
+            case CHANCE:
+            default:
+                // Legacy behavior: 1 in rarity chance for 1 item
+                return this.worldObj.rand.nextInt(result.paramN) == 0 ? 1 : 0;
+        }
     }
 
     private void resetSieve() {

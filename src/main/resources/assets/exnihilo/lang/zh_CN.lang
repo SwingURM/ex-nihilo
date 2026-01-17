@@ -23,6 +23,8 @@ exnihilo.sieve.dark_oak.name=深色橡木筛子
 
 exnihilo.gravel_nether.name=粉碎地狱岩
 exnihilo.gravel_ender.name=粉碎末地石
+exnihilo.gravel_deepslate.name=粉碎深板岩
+exnihilo.gravel_blackstone.name=粉碎黑石
 
 exnihilo.iron_gravel.name=铁矿砂砾
 exnihilo.nether_iron_gravel.name=铁矿砂砾
@@ -147,3 +149,22 @@ exnihilo.witchwater.name=巫水
 fluid.witchwater=巫水
 
 item.ice_shard.name=冰碎片
+
+# Mesh types (from ExDeorum)
+exnihilo.mesh_silk.name=线筛网
+exnihilo.mesh_flint.name=燧石筛网
+exnihilo.mesh_iron.name=铁筛网
+exnihilo.mesh_golden.name=金筛网
+exnihilo.mesh_diamond.name=钻石筛网
+exnihilo.mesh_netherite.name=下界合金筛网
+
+# Pebble types (from ExDeorum)
+item.exnihilo.pebble_stone.name=石子
+item.exnihilo.pebble_andesite.name=安山岩石子
+item.exnihilo.pebble_diorite.name=闪长岩石子
+item.exnihilo.pebble_granite.name=花岗岩石子
+item.exnihilo.pebble_deepslate.name=深板岩石子
+item.exnihilo.pebble_blackstone.name=黑石石子
+item.exnihilo.pebble_basalt.name=玄武岩石子
+item.exnihilo.pebble_tuff.name=凝灰岩石子
+item.exnihilo.pebble_calcite.name=方解石石子

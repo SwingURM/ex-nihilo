@@ -12,7 +12,9 @@ public enum MeshType {
     SILK("silk"),
     FLINT("flint"),
     IRON("iron"),
-    DIAMOND("diamond");
+    GOLDEN("golden"),
+    DIAMOND("diamond"),
+    NETHERITE("netherite");
 
     private final String name;
     private IIcon meshRenderIcon;
@@ -41,8 +43,12 @@ public enum MeshType {
                 return ENItems.MeshFlint;
             case IRON:
                 return ENItems.MeshIron;
+            case GOLDEN:
+                return ENItems.MeshGolden;
             case DIAMOND:
                 return ENItems.MeshDiamond;
+            case NETHERITE:
+                return ENItems.MeshNetherite;
             default:
                 return null;
         }
@@ -55,12 +61,14 @@ public enum MeshType {
             res[1] = SILK;
             return res;
         }
-        MeshType[] res = new MeshType[5];
+        MeshType[] res = new MeshType[values().length];
         res[0] = NONE;
         res[1] = SILK;
         res[2] = FLINT;
         res[3] = IRON;
-        res[4] = DIAMOND;
+        res[4] = GOLDEN;
+        res[5] = DIAMOND;
+        res[6] = NETHERITE;
         return res;
     }
 }

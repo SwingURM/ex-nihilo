@@ -23,6 +23,8 @@ exnihilo.sieve.dark_oak.name=Dark Oak Sieve
 
 exnihilo.gravel_nether.name=Crushed Netherrack
 exnihilo.gravel_ender.name=Crushed End Stone
+exnihilo.gravel_deepslate.name=Crushed Deepslate
+exnihilo.gravel_blackstone.name=Crushed Blackstone
 
 exnihilo.iron_gravel.name=Iron Ore Gravel
 exnihilo.nether_iron_gravel.name=Iron Ore Gravel
@@ -71,12 +73,24 @@ exnihilo.hammer_diamond.name=Diamond Hammer
 exnihilo.mesh_silk.name=Silk Mesh
 exnihilo.mesh_flint.name=Flint Mesh
 exnihilo.mesh_iron.name=Iron Mesh
+exnihilo.mesh_golden.name=Golden Mesh
 exnihilo.mesh_diamond.name=Diamond Mesh
+exnihilo.mesh_netherite.name=Netherite Mesh
 exnihilo.silkworm.name=Silkworm
 exnihilo.spores.name=Ancient Spores
 exnihilo.seed_grass.name=Grass Seeds
 exnihilo.stone.name=Stone
+item.exnihilo.pebble_stone.name=Stone Pebble
+item.exnihilo.pebble_andesite.name=Andesite Pebble
+item.exnihilo.pebble_diorite.name=Diorite Pebble
+item.exnihilo.pebble_granite.name=Granite Pebble
+item.exnihilo.pebble_deepslate.name=Deepslate Pebble
+item.exnihilo.pebble_blackstone.name=Blackstone Pebble
+item.exnihilo.pebble_basalt.name=Basalt Pebble
+item.exnihilo.pebble_tuff.name=Tuff Pebble
+item.exnihilo.pebble_calcite.name=Calcite Pebble
 exnihilo.porcelain.name=Porcelain Clay
+
 exnihilo.silkworm_cooked.name=Cooked Silkworm
 exnihilo.crook_wood.name=Wood Crook
 exnihilo.crook_stone.name=Stone Crook

@@ -22,7 +22,7 @@ public class ItemCrook extends ItemTool {
 
   public static final double pushingForce = 1.5D;
 
-  public static final Set<Object> blocksEffectiveAgainst = Sets.newHashSet(new Block[0]);
+  public static final Set<Block> blocksEffectiveAgainst = Sets.newHashSet(new Block[0]);
 
   private final CrookType type;
 

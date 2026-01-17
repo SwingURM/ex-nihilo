@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 
 public class ItemHammer extends ItemTool implements IHammer {
-  public static final Set<Object> blocksEffectiveAgainst = Sets.newHashSet(new Block[0]);
+  public static final Set<Block> blocksEffectiveAgainst = Sets.newHashSet(new Block[0]);
 
   private final HammerType type;
 

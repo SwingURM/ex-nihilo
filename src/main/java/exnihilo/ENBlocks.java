@@ -43,6 +43,11 @@ public class ENBlocks {
 
   public static Block EnderGravel;
 
+  // EtFuturum blocks - registered in EtFuturum.loadCompatibility()
+  public static Block DeepslateGravel;
+
+  public static Block BlackstoneGravel;
+
   public static void registerBlocks() {
     Barrel = new BlockBarrel();
     GameRegistry.registerBlock(Barrel, ItemBlockBarrel.class, "barrel");

@@ -151,6 +151,8 @@ public class Recipes {
             Items.redstone,
             'z',
             new ItemStack(Items.dye, 1, 4)));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.cobblestone, 1, 0), "xx", "xx", 'x', ENItems.PebbleStone));
     }
 
     public static void registerFurnaceRecipes() {

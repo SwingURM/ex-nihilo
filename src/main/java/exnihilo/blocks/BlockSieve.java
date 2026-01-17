@@ -161,6 +161,31 @@ public class BlockSieve extends BlockContainer {
         return player instanceof net.minecraft.entity.player.EntityPlayerMP && !(player instanceof FakePlayer);
     }
 
+    @Override
+    public void breakBlock(World worldIn, int x, int y, int z, Block blockBroken, int meta) {
+        TileEntity te = worldIn.getTileEntity(x, y, z);
+        if (te instanceof TileEntitySieve) {
+            TileEntitySieve sieve = (TileEntitySieve) te;
+            if (sieve.getMeshType() != MeshType.NONE && !worldIn.isRemote) {
+                Item meshItem = MeshType.getItemForType(sieve.getMeshType());
+                if (meshItem != null) {
+                    EntityItem entityItem = new EntityItem(
+                        worldIn,
+                        x + 0.5D,
+                        y + 1.5D,
+                        z + 0.5D,
+                        new ItemStack(meshItem, 1, 0));
+                    entityItem.motionX = worldIn.rand.nextGaussian() * 0.02F;
+                    entityItem.motionY = 0.1D;
+                    entityItem.motionZ = worldIn.rand.nextGaussian() * 0.02F;
+                    worldIn.spawnEntityInWorld(entityItem);
+                }
+            }
+        }
+        super.breakBlock(worldIn, x, y, z, blockBroken, meta);
+        worldIn.removeTileEntity(x, y, z);
+    }
+
     private ItemStack removeCurrentItem(EntityPlayer player) {
         ItemStack item = player.getCurrentEquippedItem();
         if (!player.capabilities.isCreativeMode) {

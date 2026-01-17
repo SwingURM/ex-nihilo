@@ -13,6 +13,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exnihilo.compatibility.AE2;
+import exnihilo.compatibility.EtFuturum;
 import exnihilo.compatibility.IC2;
 import exnihilo.compatibility.MineFactoryReloaded;
 import exnihilo.compatibility.OreList;
@@ -74,7 +75,6 @@ public class ExNihilo {
         Entities.registerEntities();
         ColorRegistry.load(config);
         CompostRegistry.load(config);
-        SieveRegistry.load(config);
         CrucibleRegistry.load(config);
         HammerRegistry.load(config);
         OreList.load(config);
@@ -129,11 +129,13 @@ public class ExNihilo {
             log.info("+++ - Found Tinkers Construct!");
             TinkersConstruct.loadCompatibility();
         }
+        if (Loader.isModLoaded("etfuturum")) {
+            log.info("+++ - Found Etfuturum!");
+            EtFuturum.loadCompatibility();
+        }
         OreList.processOreDict();
         CompostRegistry.registerOreDictAdditions(ModData.BARREL_ADDITIONS);
         CompostRegistry.registerNonDictAdditions(ModData.BARREL_ADDITIONS_NONDICT);
-        SieveRegistry.registerOreDictAdditions(ModData.SIEVE_ADDITIONS);
-        SieveRegistry.registerNonDictAdditions(ModData.SIEVE_ADDITIONS_NONDICT);
         BarrelRecipeRegistry.registerBaseRecipes();
     }
 

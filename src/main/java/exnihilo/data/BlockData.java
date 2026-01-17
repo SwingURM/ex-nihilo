@@ -18,9 +18,9 @@ public class BlockData {
   public static final String CRUCIBLE_UNFIRED_UNLOCALIZED_NAME = "crucible_unfired";
   
   public static final String DUST_KEY = "dust";
-  
+
   public static final String DUST_UNLOCALIZED_NAME = "dust";
-  
+
   public static final String BEE_TRAP_KEY = "bee_trap";
   
   public static final String BEE_TRAP_UNLOCALIZED_NAME = "bee_trap";
@@ -34,9 +34,9 @@ public class BlockData {
   public static final String[] LEAVES_INFESTED_UNLOCALIZED_NAMES = new String[] { "leaves.infested.oak", "leaves.infested.spruce", "leaves.infested.birch", "leaves.infested.jungle" };
   
   public static final String SIEVE_KEY = "sifting_table";
-  
+
   public static final String[] SIEVE_UNLOCALIZED_NAMES = new String[] { "sieve.oak", "sieve.spruce", "sieve.birch", "sieve.jungle", "sieve.acacia", "sieve.dark_oak" };
-  
+
   public static final String IRON_ORE_KEY = "iron_ore";
   
   public static final String[] IRON_ORE_NAMES = new String[] { "Iron Ore Gravel", "Iron Ore Sand", "Iron Ore Dust" };
