@@ -1,5 +1,14 @@
 package exnihilo.compatibility;
 
+import java.util.ArrayList;
+import java.util.Map;
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
+
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exnihilo.ENBlocks;
@@ -13,15 +22,6 @@ import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.RecipeInputItemStack;
 import ic2.api.recipe.RecipeOutput;
 import ic2.api.recipe.Recipes;
-
-import java.util.ArrayList;
-import java.util.Map;
-
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class IC2 {
 
@@ -91,16 +91,12 @@ public class IC2 {
                 null,
                 new ItemStack(Blocks.gravel));
             ExNihilo.log.info("Macerator: added recipe for cobble->gravel");
-            Recipes.macerator.addRecipe(
-                new RecipeInputItemStack(new ItemStack(Blocks.gravel)),
-                null,
-                new ItemStack(Blocks.sand));
+            Recipes.macerator
+                .addRecipe(new RecipeInputItemStack(new ItemStack(Blocks.gravel)), null, new ItemStack(Blocks.sand));
             ExNihilo.log.info("Macerator: added recipe for gravel->sand");
         }
-        Recipes.macerator.addRecipe(
-            new RecipeInputItemStack(new ItemStack(Blocks.sand)),
-            null,
-            new ItemStack(ENBlocks.Dust));
+        Recipes.macerator
+            .addRecipe(new RecipeInputItemStack(new ItemStack(Blocks.sand)), null, new ItemStack(ENBlocks.Dust));
         ExNihilo.log.info("Macerator: added recipe sand->dust");
         ExNihilo.log.info("--- IC2 Integration Complete!");
     }

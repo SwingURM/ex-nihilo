@@ -1,17 +1,5 @@
 package exnihilo.blocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import exnihilo.ENItems;
-import exnihilo.blocks.tileentities.TileEntityBarrel;
-import exnihilo.data.BlockData;
-import exnihilo.data.ModData;
-import exnihilo.registries.BarrelRecipeRegistry;
-import exnihilo.registries.CompostRegistry;
-import exnihilo.registries.helpers.EntityWithItem;
-import exnihilo.utils.ItemInfo;
-
 import java.lang.reflect.Constructor;
 import java.util.List;
 
@@ -33,6 +21,18 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import exnihilo.ENItems;
+import exnihilo.blocks.tileentities.TileEntityBarrel;
+import exnihilo.data.BlockData;
+import exnihilo.data.ModData;
+import exnihilo.registries.BarrelRecipeRegistry;
+import exnihilo.registries.CompostRegistry;
+import exnihilo.registries.helpers.EntityWithItem;
+import exnihilo.utils.ItemInfo;
 
 public class BlockBarrel extends BlockContainer {
 
@@ -58,8 +58,7 @@ public class BlockBarrel extends BlockContainer {
     @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void getSubBlocks(Item item, CreativeTabs tabs, List subItems) {
-        for (int i = 0; i < 6; i++)
-            subItems.add(new ItemStack(item, 1, i));
+        for (int i = 0; i < 6; i++) subItems.add(new ItemStack(item, 1, i));
     }
 
     @Override
@@ -85,21 +84,20 @@ public class BlockBarrel extends BlockContainer {
         TileEntityBarrel barrel = (TileEntityBarrel) world.getTileEntity(x, y, z);
         if ((barrel.getMode()).canExtract == TileEntityBarrel.ExtractMode.Always
             || (world.difficultySetting.getDifficultyId() == 0
-            && (barrel.getMode()).canExtract == TileEntityBarrel.ExtractMode.PeacefulOnly)) {
+                && (barrel.getMode()).canExtract == TileEntityBarrel.ExtractMode.PeacefulOnly)) {
             barrel.giveAppropriateItem();
         } else if (player.getCurrentEquippedItem() != null) {
             ItemStack item = player.getCurrentEquippedItem();
             if (item != null) {
-                if (ModData.ALLOW_BARREL_RECIPE_DIRT)
-                    if (barrel.getMode() == TileEntityBarrel.BarrelMode.EMPTY || (barrel.getMode()
-                        == TileEntityBarrel.BarrelMode.COMPOST && !barrel.isFull()))
-                        if (CompostRegistry.containsItem(item.getItem(), item.getItemDamage())) {
-                            barrel.addCompostItem(CompostRegistry.getItem(item.getItem(), item.getItemDamage()));
-                            if (!player.capabilities.isCreativeMode) {
-                                item.stackSize--;
-                                if (item.stackSize == 0) item = null;
-                            }
+                if (ModData.ALLOW_BARREL_RECIPE_DIRT) if (barrel.getMode() == TileEntityBarrel.BarrelMode.EMPTY
+                    || (barrel.getMode() == TileEntityBarrel.BarrelMode.COMPOST && !barrel.isFull()))
+                    if (CompostRegistry.containsItem(item.getItem(), item.getItemDamage())) {
+                        barrel.addCompostItem(CompostRegistry.getItem(item.getItem(), item.getItemDamage()));
+                        if (!player.capabilities.isCreativeMode) {
+                            item.stackSize--;
+                            if (item.stackSize == 0) item = null;
                         }
+                    }
                 if (barrel.getMode() == TileEntityBarrel.BarrelMode.EMPTY
                     || barrel.getMode() == TileEntityBarrel.BarrelMode.FLUID) {
                     FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(item);
@@ -113,9 +111,8 @@ public class BlockBarrel extends BlockContainer {
                                         player.inventory.currentItem,
                                         new ItemStack(Items.glass_bottle, 1, 0));
                                 } else {
-                                    player.inventory.setInventorySlotContents(
-                                        player.inventory.currentItem,
-                                        getContainer(item));
+                                    player.inventory
+                                        .setInventorySlotContents(player.inventory.currentItem, getContainer(item));
                                 }
                         }
                     } else if (FluidContainerRegistry.isContainer(item)) {
@@ -146,27 +143,28 @@ public class BlockBarrel extends BlockContainer {
                     EntityWithItem mob = BarrelRecipeRegistry.getMobOutput(barrel.fluid, item);
                     if (mob != null && barrel.isFull() && barrel.getMode() == TileEntityBarrel.BarrelMode.FLUID) {
                         try {
-                            Constructor<EntityLivingBase> constructor = mob.getEntity().getConstructor(World.class);
+                            Constructor<EntityLivingBase> constructor = mob.getEntity()
+                                .getConstructor(World.class);
                             barrel.entity = constructor.newInstance(barrel.getWorldObj());
-                        } catch (Exception ignored) {
-                        }
+                        } catch (Exception ignored) {}
                         barrel.entityParticleName = mob.getParticle();
                         barrel.peacefulDrop = mob.getDrops();
                         barrel.setMode(TileEntityBarrel.BarrelMode.MOB);
                         useItem(player);
                     }
                     if (barrel.getMode() == TileEntityBarrel.BarrelMode.FLUID && barrel.isFull())
-                        if (barrel.fluid.getFluid().equals(FluidRegistry.WATER)) {
-                            if (ModData.ALLOW_BARREL_RECIPE_SLIME && item.getItem() == Items.milk_bucket) {
-                                barrel.setMode(TileEntityBarrel.BarrelMode.MILKED);
-                                useItem(player);
+                        if (barrel.fluid.getFluid()
+                            .equals(FluidRegistry.WATER)) {
+                                if (ModData.ALLOW_BARREL_RECIPE_SLIME && item.getItem() == Items.milk_bucket) {
+                                    barrel.setMode(TileEntityBarrel.BarrelMode.MILKED);
+                                    useItem(player);
+                                }
+                                if (ModData.ALLOW_BARREL_RECIPE_SOULSAND
+                                    && (item.getItem() == Items.mushroom_stew || item.getItem() == ENItems.Spores)) {
+                                    barrel.setMode(TileEntityBarrel.BarrelMode.SPORED);
+                                    useItem(player);
+                                }
                             }
-                            if (ModData.ALLOW_BARREL_RECIPE_SOULSAND && (item.getItem() == Items.mushroom_stew
-                                || item.getItem() == ENItems.Spores)) {
-                                barrel.setMode(TileEntityBarrel.BarrelMode.SPORED);
-                                useItem(player);
-                            }
-                        }
                 }
             }
         }
@@ -217,7 +215,10 @@ public class BlockBarrel extends BlockContainer {
 
     private ItemStack getContainer(ItemStack item) {
         if (item.stackSize == 1) {
-            if (item.getItem().hasContainerItem(item)) return item.getItem().getContainerItem(item);
+            if (item.getItem()
+                .hasContainerItem(item))
+                return item.getItem()
+                    .getContainerItem(item);
             return null;
         }
         item.splitStack(1);

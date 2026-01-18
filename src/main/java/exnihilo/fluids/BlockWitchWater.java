@@ -1,9 +1,5 @@
 package exnihilo.fluids;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import exnihilo.data.ModData;
-import exnihilo.registries.ColorRegistry;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLiquid;
@@ -28,6 +24,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import exnihilo.data.ModData;
+import exnihilo.registries.ColorRegistry;
+
 public class BlockWitchWater extends BlockFluidClassic {
 
     @SideOnly(Side.CLIENT)
@@ -47,11 +48,8 @@ public class BlockWitchWater extends BlockFluidClassic {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register) {
-        this.fluidIcons = new IIcon[]
-            {
-                register.registerIcon(ModData.TEXTURE_LOCATION + ":IconWitchWaterStill"),
-                register.registerIcon(ModData.TEXTURE_LOCATION + ":IconWitchWaterFlow")
-            };
+        this.fluidIcons = new IIcon[] { register.registerIcon(ModData.TEXTURE_LOCATION + ":IconWitchWaterStill"),
+            register.registerIcon(ModData.TEXTURE_LOCATION + ":IconWitchWaterFlow") };
     }
 
     @Override
@@ -62,7 +60,8 @@ public class BlockWitchWater extends BlockFluidClassic {
     @Override
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
-        return ColorRegistry.color("witchwater").toInt();
+        return ColorRegistry.color("witchwater")
+            .toInt();
     }
 
     @Override

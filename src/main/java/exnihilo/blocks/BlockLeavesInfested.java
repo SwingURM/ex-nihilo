@@ -1,13 +1,5 @@
 package exnihilo.blocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import exnihilo.blocks.tileentities.TileEntityLeavesInfested;
-import exnihilo.data.BlockData;
-import exnihilo.data.ModData;
-import exnihilo.registries.ColorRegistry;
-
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -22,6 +14,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import exnihilo.blocks.tileentities.TileEntityLeavesInfested;
+import exnihilo.data.BlockData;
+import exnihilo.data.ModData;
+import exnihilo.registries.ColorRegistry;
 
 public class BlockLeavesInfested extends BlockLeaves implements ITileEntityProvider {
 
@@ -59,11 +59,8 @@ public class BlockLeavesInfested extends BlockLeaves implements ITileEntityProvi
                         for (int i2 = -b0; i2 <= b0; i2++) {
                             for (int j2 = -b0; j2 <= b0; j2++) {
                                 Block block = par1World.getBlock(par2 + i, par3 + i2, par4 + j2);
-                                if (block != null && block.canSustainLeaves(
-                                    par1World,
-                                    par2 + i,
-                                    par3 + i2,
-                                    par4 + j2)) {
+                                if (block != null
+                                    && block.canSustainLeaves(par1World, par2 + i, par3 + i2, par4 + j2)) {
                                     this.adjacentTreeBlocks[(i + k1) * j1 + (i2 + k1) * b1 + j2 + k1] = 0;
                                 } else if (block != null && block.isLeaves(par1World, par2 + i, par3 + i2, par4 + j2)) {
                                     this.adjacentTreeBlocks[(i + k1) * j1 + (i2 + k1) * b1 + j2 + k1] = -2;
@@ -125,7 +122,8 @@ public class BlockLeavesInfested extends BlockLeaves implements ITileEntityProvi
     public int colorMultiplier(IBlockAccess world, int x, int y, int z) {
         TileEntityLeavesInfested leaves = (TileEntityLeavesInfested) world.getTileEntity(x, y, z);
         if (leaves != null) return leaves.color.toInt();
-        return ColorRegistry.color("white").toInt();
+        return ColorRegistry.color("white")
+            .toInt();
     }
 
     @Override
@@ -137,7 +135,8 @@ public class BlockLeavesInfested extends BlockLeaves implements ITileEntityProvi
     @Override
     @SideOnly(Side.CLIENT)
     public int getRenderColor(int par1) {
-        return ColorRegistry.color("white").toInt();
+        return ColorRegistry.color("white")
+            .toInt();
     }
 
     @Override
@@ -177,8 +176,9 @@ public class BlockLeavesInfested extends BlockLeaves implements ITileEntityProvi
             if (leaves != null) {
                 if (world.rand.nextFloat() < leaves.getProgress() * (float) ModData.SILKWORM_STRING_PROBABILITY)
                     dropBlockAsItem(world, x, y, z, new ItemStack(Items.string, 1, 0));
-                if (world.rand.nextFloat() < leaves.getProgress() * (float) (ModData.SILKWORM_STRING_PROBABILITY
-                    / 4.0D)) dropBlockAsItem(world, x, y, z, new ItemStack(Items.string, 1, 0));
+                if (world.rand.nextFloat()
+                    < leaves.getProgress() * (float) (ModData.SILKWORM_STRING_PROBABILITY / 4.0D))
+                    dropBlockAsItem(world, x, y, z, new ItemStack(Items.string, 1, 0));
             }
         }
         return world.setBlockToAir(x, y, z);

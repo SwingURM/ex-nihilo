@@ -16,7 +16,7 @@ public enum HammerType {
     private final ToolMaterial material;
 
     HammerType(String name, int durability, ToolMaterial material) {
-        this.name = "hammer_"+name;
+        this.name = "hammer_" + name;
         this.durability = durability;
         this.material = material;
     }
@@ -25,7 +25,11 @@ public enum HammerType {
         return this.name;
     }
 
-    public int getDurability() { return this.durability; }
+    public int getDurability() {
+        return this.durability;
+    }
 
-    public ToolMaterial getMaterial() { return this.material; }
+    public ToolMaterial getMaterial() {
+        return this.material;
+    }
 }

@@ -3,9 +3,10 @@ package exnihilo.registries.helpers;
 import exnihilo.utils.ItemInfo;
 
 public class SiftingResult {
+
     public final ItemInfo drop;
     public final ProbabilityType type;
-    public final int paramN;  // For binomial: number of trials
+    public final int paramN; // For binomial: number of trials
     public final float paramP; // For binomial: probability or for fixed: max amount
 
     // Fixed amount (always drops exact amount)
@@ -36,8 +37,8 @@ public class SiftingResult {
     }
 
     public enum ProbabilityType {
-        FIXED,    // Always drops paramN items
-        CHANCE,   // 1 in paramN chance
-        BINOMIAL  // Binomial distribution with n=paramN, p=paramP
+        FIXED, // Always drops paramN items
+        CHANCE, // 1 in paramN chance
+        BINOMIAL // Binomial distribution with n=paramN, p=paramP
     }
 }

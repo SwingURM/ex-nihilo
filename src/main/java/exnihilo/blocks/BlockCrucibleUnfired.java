@@ -1,9 +1,5 @@
 package exnihilo.blocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import exnihilo.blocks.tileentities.TileEntityCrucibleUnfired;
-import exnihilo.data.BlockData;
-import exnihilo.data.ModData;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -11,6 +7,11 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import exnihilo.blocks.tileentities.TileEntityCrucibleUnfired;
+import exnihilo.data.BlockData;
+import exnihilo.data.ModData;
 
 public class BlockCrucibleUnfired extends BlockContainer {
 

@@ -1,19 +1,18 @@
 package exnihilo.events;
 
+import java.util.ArrayList;
+
+import net.minecraft.block.Block;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
+import net.minecraftforge.event.world.BlockEvent;
+
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import exnihilo.items.hammers.IHammer;
 import exnihilo.registries.HammerRegistry;
 import exnihilo.registries.helpers.Smashable;
-
-import java.util.ArrayList;
-
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
-import net.minecraftforge.event.world.BlockEvent;
 
 public class HandlerHammer {
 
@@ -45,8 +44,8 @@ public class HandlerHammer {
 
     public boolean canHarvest(Block block, int meta, ItemStack stack) {
         int harvestLevel = 0;
-        if (stack.getItem() instanceof ItemTool)
-            harvestLevel = ((ItemTool) stack.getItem()).func_150913_i().getHarvestLevel();
+        if (stack.getItem() instanceof ItemTool) harvestLevel = ((ItemTool) stack.getItem()).func_150913_i()
+            .getHarvestLevel();
         return (block.getHarvestLevel(meta) <= harvestLevel);
     }
 }

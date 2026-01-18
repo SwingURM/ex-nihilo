@@ -1,10 +1,11 @@
 package exnihilo.items.meshes;
 
-import exnihilo.ENItems;
-import exnihilo.data.ModData;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
+
+import exnihilo.ENItems;
+import exnihilo.data.ModData;
 
 public enum MeshType {
 
@@ -36,7 +37,7 @@ public enum MeshType {
     }
 
     public static Item getItemForType(MeshType type) {
-        switch(type) {
+        switch (type) {
             case SILK:
                 return ENItems.MeshSilk;
             case FLINT:

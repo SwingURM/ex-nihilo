@@ -1,14 +1,16 @@
 package exnihilo.blocks.renderers.blockItems;
 
-import exnihilo.blocks.models.ModelBarrel;
+import java.util.Objects;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
 
-import java.util.Objects;
+import exnihilo.blocks.models.ModelBarrel;
 
 public class ItemRenderBarrel implements IItemRenderer {
 
@@ -45,7 +47,8 @@ public class ItemRenderBarrel implements IItemRenderer {
     }
 
     protected void bindTexture(Block block, int meta) {
-        TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
+        TextureManager texturemanager = Minecraft.getMinecraft()
+            .getTextureManager();
         if (texturemanager != null) if (meta >= 0) texturemanager.bindTexture(this.model.getBarrelTexture(block, meta));
     }
 }

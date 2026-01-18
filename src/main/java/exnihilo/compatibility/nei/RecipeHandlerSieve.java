@@ -1,5 +1,19 @@
 package exnihilo.compatibility.nei;
 
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+
+import org.lwjgl.opengl.GL11;
+
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
@@ -9,23 +23,13 @@ import exnihilo.items.meshes.MeshType;
 import exnihilo.registries.SieveRegistry;
 import exnihilo.registries.helpers.SiftingResult;
 import exnihilo.utils.ItemInfo;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import org.lwjgl.opengl.GL11;
 
 public class RecipeHandlerSieve extends TemplateRecipeHandler {
 
     private static final DecimalFormat df = new DecimalFormat("0.0");
 
     public class CachedSieveRecipe extends TemplateRecipeHandler.CachedRecipe {
+
         private final List<PositionedStack> input = new ArrayList<>();
         private final List<PositionedStack> outputs = new ArrayList<>();
         private final Map<Integer, SiftingResult> resultToChance = new HashMap<>();
@@ -52,10 +56,13 @@ public class RecipeHandlerSieve extends TemplateRecipeHandler {
         }
 
         public CachedSieveRecipe(List<ItemStack> variations, MeshType meshType, ItemStack base, ItemStack focus,
-                                 List<SiftingResult> chances) {
+            List<SiftingResult> chances) {
             super();
             PositionedStack pstack_item = new PositionedStack((base != null) ? base : variations, 11, 3);
-            PositionedStack pstack_mesh = new PositionedStack(new ItemStack(MeshType.getItemForType(meshType), 1, 0), 11, 39);
+            PositionedStack pstack_mesh = new PositionedStack(
+                new ItemStack(MeshType.getItemForType(meshType), 1, 0),
+                11,
+                39);
             pstack_item.setMaxSize(1);
             pstack_mesh.setMaxSize(1);
             this.input.add(pstack_item);
@@ -90,7 +97,7 @@ public class RecipeHandlerSieve extends TemplateRecipeHandler {
     }
 
     private void addCached(List<ItemStack> variations, MeshType meshType, ItemStack base, ItemStack focus,
-                           List<SiftingResult> chances) {
+        List<SiftingResult> chances) {
         if (variations.size() > 21) {
             List<List<ItemStack>> parts = new ArrayList<>();
             int size = variations.size();
@@ -114,9 +121,8 @@ public class RecipeHandlerSieve extends TemplateRecipeHandler {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GuiDraw.changeTexture(getGuiTexture());
         GuiDraw.drawTexturedModalRect(0, 0, 0, 0, 166, 56);
-        Point focus = ((CachedSieveRecipe)this.arecipes.get(recipeIndex)).focus;
-        if (focus != null)
-            GuiDraw.drawTexturedModalRect(focus.x, focus.y, 166, 0, 18, 18);
+        Point focus = ((CachedSieveRecipe) this.arecipes.get(recipeIndex)).focus;
+        if (focus != null) GuiDraw.drawTexturedModalRect(focus.x, focus.y, 166, 0, 18, 18);
     }
 
     @Override
@@ -126,16 +132,18 @@ public class RecipeHandlerSieve extends TemplateRecipeHandler {
 
     @Override
     public void loadTransferRects() {
-        this.transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(18, 22, 18, 14), "exnihilo.sieve"));
+        this.transferRects
+            .add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(18, 22, 18, 14), "exnihilo.sieve"));
     }
 
     @Override
     public void loadCraftingRecipes(String outputID, Object... results) {
         if (outputID.equals("exnihilo.sieve")) {
             for (MeshType meshType : MeshType.getValues()) {
-                if (meshType == MeshType.NONE)
-                    continue;
-                for (ItemInfo ii : SieveRegistry.getSiftables().get(meshType).keySet()) {
+                if (meshType == MeshType.NONE) continue;
+                for (ItemInfo ii : SieveRegistry.getSiftables()
+                    .get(meshType)
+                    .keySet()) {
                     ItemStack inputStack = ii.getStack();
                     ArrayList<ItemStack> resultStacks = new ArrayList<>();
                     ArrayList<SiftingResult> chances = new ArrayList<>();
@@ -153,9 +161,11 @@ public class RecipeHandlerSieve extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        for (Map.Entry<MeshType, ArrayList<ItemInfo>> set : SieveRegistry.getSources(result).entrySet()) {
+        for (Map.Entry<MeshType, ArrayList<ItemInfo>> set : SieveRegistry.getSources(result)
+            .entrySet()) {
             for (ItemInfo ii : set.getValue()) {
-                ArrayList<SiftingResult> results = SieveRegistry.getSiftingOutput(Block.getBlockFromItem(ii.getItem()), ii.getMeta(), set.getKey());
+                ArrayList<SiftingResult> results = SieveRegistry
+                    .getSiftingOutput(Block.getBlockFromItem(ii.getItem()), ii.getMeta(), set.getKey());
                 if (results == null) continue;
 
                 // Build result stacks and pair them with their SiftingResults
@@ -175,11 +185,11 @@ public class RecipeHandlerSieve extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        if (Block.getBlockFromItem(ingredient.getItem()) == Blocks.air)
-            return;
+        if (Block.getBlockFromItem(ingredient.getItem()) == Blocks.air) return;
         for (MeshType meshType : MeshType.getValues()) {
             if (meshType == MeshType.NONE) continue;
-            ArrayList<SiftingResult> results = SieveRegistry.getSiftingOutput(Block.getBlockFromItem(ingredient.getItem()), ingredient.getItemDamage(), meshType);
+            ArrayList<SiftingResult> results = SieveRegistry
+                .getSiftingOutput(Block.getBlockFromItem(ingredient.getItem()), ingredient.getItemDamage(), meshType);
             if (results == null) continue;
 
             // Build result stacks and pair them with their SiftingResults
@@ -197,14 +207,18 @@ public class RecipeHandlerSieve extends TemplateRecipeHandler {
     }
 
     @Override
-    public List<String> handleItemTooltip(GuiRecipe<?> guiRecipe, ItemStack itemStack, List<String> currenttip, int recipe) {
-        CachedSieveRecipe crecipe = (CachedSieveRecipe)this.arecipes.get(recipe);
+    public List<String> handleItemTooltip(GuiRecipe<?> guiRecipe, ItemStack itemStack, List<String> currenttip,
+        int recipe) {
+        CachedSieveRecipe crecipe = (CachedSieveRecipe) this.arecipes.get(recipe);
         Point mouse = GuiDraw.getMousePosition();
         Point offset = guiRecipe.getRecipePosition(recipe);
-        Point relMouse = new Point(mouse.x - (guiRecipe.width - 166) / 2 - offset.x, mouse.y - (guiRecipe.height - (56 * this.recipiesPerPage())) / 2 - offset.y);
+        Point relMouse = new Point(
+            mouse.x - (guiRecipe.width - 166) / 2 - offset.x,
+            mouse.y - (guiRecipe.height - (56 * this.recipiesPerPage())) / 2 - offset.y);
 
-        if (itemStack != null && relMouse.x > 32 && mouse.y > offset.y + 32 &&
-            mouse.y < (((guiRecipe.height - (56 * this.recipiesPerPage())) / 2 + offset.y) + 56) + 32) {
+        if (itemStack != null && relMouse.x > 32
+            && mouse.y > offset.y + 32
+            && mouse.y < (((guiRecipe.height - (56 * this.recipiesPerPage())) / 2 + offset.y) + 56) + 32) {
 
             int outputIndex = -1;
             for (int i = 0; i < crecipe.outputs.size(); i++) {

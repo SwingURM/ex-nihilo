@@ -1,9 +1,5 @@
 package exnihilo.blocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import exnihilo.blocks.tileentities.TileEntityCrucible;
-import exnihilo.data.BlockData;
-import exnihilo.data.ModData;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -18,6 +14,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import exnihilo.blocks.tileentities.TileEntityCrucible;
+import exnihilo.data.BlockData;
+import exnihilo.data.ModData;
 
 public class BlockCrucible extends BlockContainer {
 
@@ -116,7 +117,10 @@ public class BlockCrucible extends BlockContainer {
 
     private ItemStack getContainer(ItemStack item) {
         if (item.stackSize == 1) {
-            if (item.getItem().hasContainerItem(item)) return item.getItem().getContainerItem(item);
+            if (item.getItem()
+                .hasContainerItem(item))
+                return item.getItem()
+                    .getContainerItem(item);
             return null;
         }
         item.splitStack(1);

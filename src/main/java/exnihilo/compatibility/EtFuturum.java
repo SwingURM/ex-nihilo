@@ -1,5 +1,11 @@
 package exnihilo.compatibility;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exnihilo.ENBlocks;
@@ -10,11 +16,6 @@ import exnihilo.blocks.BlockDeepslateGravel;
 import exnihilo.items.ItemPebble;
 import exnihilo.items.meshes.MeshType;
 import exnihilo.registries.SieveRegistry;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 /**
  * Compatibility module for Etfuturum mod.
@@ -50,7 +51,8 @@ public class EtFuturum {
 
             // Deepslate exists in EtFuturum 2.5+ for 1.16+
             try {
-                Object deepslateBlock = modBlocksClass.getField("DEEPSLATE").get(null);
+                Object deepslateBlock = modBlocksClass.getField("DEEPSLATE")
+                    .get(null);
                 if (deepslateBlock != null) {
                     ENBlocks.DeepslateGravel = new BlockDeepslateGravel();
                     GameRegistry.registerBlock(ENBlocks.DeepslateGravel, ENBlocks.DeepslateGravel.getUnlocalizedName());
@@ -62,11 +64,12 @@ public class EtFuturum {
 
             // Blackstone exists in EtFuturum 2.5+ for 1.16+
             try {
-                Object blackstoneBlock = modBlocksClass.getField("BLACKSTONE").get(null);
+                Object blackstoneBlock = modBlocksClass.getField("BLACKSTONE")
+                    .get(null);
                 if (blackstoneBlock != null) {
                     ENBlocks.BlackstoneGravel = new BlockBlackstoneGravel();
-                    GameRegistry.registerBlock(ENBlocks.BlackstoneGravel,
-                            ENBlocks.BlackstoneGravel.getUnlocalizedName());
+                    GameRegistry
+                        .registerBlock(ENBlocks.BlackstoneGravel, ENBlocks.BlackstoneGravel.getUnlocalizedName());
                     ExNihilo.log.info("Registered blackstone_gravel (EtFuturum detected)");
                 }
             } catch (NoSuchFieldException e) {
@@ -102,132 +105,149 @@ public class EtFuturum {
         // Pebble -> stone variant recipes (2x2)
         // Andesite: etfuturum:stone@5, Granite: etfuturum:stone@1, Diorite:
         // etfuturum:stone@3
-        GameRegistry.addRecipe(new ShapedOreRecipe(
+        GameRegistry.addRecipe(
+            new ShapedOreRecipe(
                 new ItemStack(GameRegistry.findItem("etfuturum", "stone"), 1, 5),
-                "xx", "xx", 'x', ENItems.PebbleAndesite));
-        GameRegistry.addRecipe(new ShapedOreRecipe(
+                "xx",
+                "xx",
+                'x',
+                ENItems.PebbleAndesite));
+        GameRegistry.addRecipe(
+            new ShapedOreRecipe(
                 new ItemStack(GameRegistry.findItem("etfuturum", "stone"), 1, 1),
-                "xx", "xx", 'x', ENItems.PebbleGranite));
-        GameRegistry.addRecipe(new ShapedOreRecipe(
+                "xx",
+                "xx",
+                'x',
+                ENItems.PebbleGranite));
+        GameRegistry.addRecipe(
+            new ShapedOreRecipe(
                 new ItemStack(GameRegistry.findItem("etfuturum", "stone"), 1, 3),
-                "xx", "xx", 'x', ENItems.PebbleDiorite));
+                "xx",
+                "xx",
+                'x',
+                ENItems.PebbleDiorite));
 
         // Deepslate pebble -> cobbled deepslate
-        GameRegistry.addRecipe(new ShapedOreRecipe(
+        GameRegistry.addRecipe(
+            new ShapedOreRecipe(
                 new ItemStack(GameRegistry.findItem("etfuturum", "cobbled_deepslate"), 1, 0),
-                "xx", "xx", 'x', ENItems.PebbleDeepslate));
+                "xx",
+                "xx",
+                'x',
+                ENItems.PebbleDeepslate));
 
         // Tuff, Calcite, Blackstone, Basalt
-        GameRegistry.addRecipe(new ShapedOreRecipe(
+        GameRegistry.addRecipe(
+            new ShapedOreRecipe(
                 new ItemStack(GameRegistry.findItem("etfuturum", "tuff"), 1, 0),
-                "xx", "xx", 'x', ENItems.PebbleTuff));
-        GameRegistry.addRecipe(new ShapedOreRecipe(
+                "xx",
+                "xx",
+                'x',
+                ENItems.PebbleTuff));
+        GameRegistry.addRecipe(
+            new ShapedOreRecipe(
                 new ItemStack(GameRegistry.findItem("etfuturum", "calcite"), 1, 0),
-                "xx", "xx", 'x', ENItems.PebbleCalcite));
-        GameRegistry.addRecipe(new ShapedOreRecipe(
+                "xx",
+                "xx",
+                'x',
+                ENItems.PebbleCalcite));
+        GameRegistry.addRecipe(
+            new ShapedOreRecipe(
                 new ItemStack(GameRegistry.findItem("etfuturum", "blackstone"), 1, 0),
-                "xx", "xx", 'x', ENItems.PebbleBlackstone));
-        GameRegistry.addRecipe(new ShapedOreRecipe(
+                "xx",
+                "xx",
+                'x',
+                ENItems.PebbleBlackstone));
+        GameRegistry.addRecipe(
+            new ShapedOreRecipe(
                 new ItemStack(GameRegistry.findItem("etfuturum", "basalt"), 1, 0),
-                "xx", "xx", 'x', ENItems.PebbleBasalt));
+                "xx",
+                "xx",
+                'x',
+                ENItems.PebbleBasalt));
     }
 
     private static void registerCrushedBlockRewards() {
         // ============ BLACKSTONE GRAVEL ============
         // SILK mesh
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBasalt, 0, 3, 0.50f,
-                MeshType.SILK);
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 4, 0.60f,
-                MeshType.SILK);
+        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBasalt, 0, 3, 0.50f, MeshType.SILK);
+        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 4, 0.60f, MeshType.SILK);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gold_nugget, 0, 4, 0.20f, MeshType.SILK);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gunpowder, 0, 1, 0.07f, MeshType.SILK);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.magma_cream, 0, 1, 0.08f, MeshType.SILK);
 
         // FLINT mesh
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBasalt, 0, 3, 0.55f,
-                MeshType.FLINT);
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 4, 0.65f,
-                MeshType.FLINT);
+        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBasalt, 0, 3, 0.55f, MeshType.FLINT);
+        SieveRegistry
+            .registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 4, 0.65f, MeshType.FLINT);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gold_nugget, 0, 4, 0.23f, MeshType.FLINT);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gunpowder, 0, 1, 0.09f, MeshType.FLINT);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.magma_cream, 0, 1, 0.09f, MeshType.FLINT);
 
         // IRON mesh
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBasalt, 0, 4, 0.55f,
-                MeshType.IRON);
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 5, 0.65f,
-                MeshType.IRON);
+        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBasalt, 0, 4, 0.55f, MeshType.IRON);
+        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 5, 0.65f, MeshType.IRON);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gold_nugget, 0, 4, 0.25f, MeshType.IRON);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gunpowder, 0, 1, 0.09f, MeshType.IRON);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.magma_cream, 0, 1, 0.09f, MeshType.IRON);
 
         // GOLDEN mesh
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBasalt, 0, 4, 0.50f,
-                MeshType.GOLDEN);
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 5, 0.70f,
-                MeshType.GOLDEN);
+        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBasalt, 0, 4, 0.50f, MeshType.GOLDEN);
+        SieveRegistry
+            .registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 5, 0.70f, MeshType.GOLDEN);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gold_nugget, 0, 8, 0.33f, MeshType.GOLDEN);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gunpowder, 0, 1, 0.10f, MeshType.GOLDEN);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.magma_cream, 0, 1, 0.10f, MeshType.GOLDEN);
 
         // DIAMOND mesh
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 5, 0.70f,
-                MeshType.DIAMOND);
+        SieveRegistry
+            .registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 5, 0.70f, MeshType.DIAMOND);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gold_nugget, 0, 4, 0.28f, MeshType.DIAMOND);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gunpowder, 0, 1, 0.11f, MeshType.DIAMOND);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.magma_cream, 0, 1, 0.11f, MeshType.DIAMOND);
 
         // NETHERITE mesh
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 5, 0.75f,
-                MeshType.NETHERITE);
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gold_nugget, 0, 4, 0.33f,
-                MeshType.NETHERITE);
+        SieveRegistry
+            .registerBinomial(ENBlocks.BlackstoneGravel, ENItems.PebbleBlackstone, 0, 5, 0.75f, MeshType.NETHERITE);
+        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gold_nugget, 0, 4, 0.33f, MeshType.NETHERITE);
         SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.gunpowder, 0, 1, 0.11f, MeshType.NETHERITE);
-        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.magma_cream, 0, 1, 0.12f,
-                MeshType.NETHERITE);
+        SieveRegistry.registerBinomial(ENBlocks.BlackstoneGravel, Items.magma_cream, 0, 1, 0.12f, MeshType.NETHERITE);
 
         // ============ DEEPSLATE GRAVEL ============
 
         // SILK mesh
-        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.50f,
-                MeshType.SILK);
+        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.50f, MeshType.SILK);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.diamond, 0, 1, 0.04f, MeshType.SILK);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.emerald, 0, 1, 0.03f, MeshType.SILK);
 
         // FLINT mesh
-        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleBasalt, 0, 4, 0.40f,
-                MeshType.FLINT);
-        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleCalcite, 0, 4, 0.40f,
-                MeshType.FLINT);
-        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.50f,
-                MeshType.FLINT);
-        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleTuff, 0, 4, 0.40f,
-                MeshType.FLINT);
+        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleBasalt, 0, 4, 0.40f, MeshType.FLINT);
+        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleCalcite, 0, 4, 0.40f, MeshType.FLINT);
+        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.50f, MeshType.FLINT);
+        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleTuff, 0, 4, 0.40f, MeshType.FLINT);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.diamond, 0, 1, 0.05f, MeshType.FLINT);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.emerald, 0, 1, 0.04f, MeshType.FLINT);
 
         // IRON mesh
-        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.60f,
-                MeshType.IRON);
+        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.60f, MeshType.IRON);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.diamond, 0, 1, 0.06f, MeshType.IRON);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.emerald, 0, 1, 0.05f, MeshType.IRON);
 
         // GOLDEN mesh
-        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.65f,
-                MeshType.GOLDEN);
+        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.65f, MeshType.GOLDEN);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.diamond, 0, 1, 0.08f, MeshType.GOLDEN);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.emerald, 0, 1, 0.07f, MeshType.GOLDEN);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.gold_nugget, 0, 3, 0.10f, MeshType.GOLDEN);
 
         // DIAMOND mesh
-        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.65f,
-                MeshType.DIAMOND);
+        SieveRegistry
+            .registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.65f, MeshType.DIAMOND);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.diamond, 0, 1, 0.08f, MeshType.DIAMOND);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.emerald, 0, 1, 0.08f, MeshType.DIAMOND);
 
         // NETHERITE mesh
-        SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.70f,
-                MeshType.NETHERITE);
+        SieveRegistry
+            .registerBinomial(ENBlocks.DeepslateGravel, ENItems.PebbleDeepslate, 0, 4, 0.70f, MeshType.NETHERITE);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.diamond, 0, 1, 0.10f, MeshType.NETHERITE);
         SieveRegistry.registerBinomial(ENBlocks.DeepslateGravel, Items.emerald, 0, 1, 0.10f, MeshType.NETHERITE);
     }
@@ -296,10 +316,10 @@ public class EtFuturum {
         // SAND mesh rewards - cactus is vanilla block in 1.7.10
         SieveRegistry.registerBinomial(Blocks.sand, new ItemStack(Blocks.cactus).getItem(), 0, 1, 0.13f, MeshType.SILK);
         SieveRegistry.registerBinomial(Blocks.sand, new ItemStack(Blocks.cactus).getItem(), 0, 1, 0.13f, MeshType.IRON);
-        SieveRegistry.registerBinomial(Blocks.sand, new ItemStack(Blocks.cactus).getItem(), 0, 1, 0.10f,
-                MeshType.GOLDEN);
-        SieveRegistry.registerBinomial(Blocks.sand, new ItemStack(Blocks.cactus).getItem(), 0, 1, 0.15f,
-                MeshType.NETHERITE);
+        SieveRegistry
+            .registerBinomial(Blocks.sand, new ItemStack(Blocks.cactus).getItem(), 0, 1, 0.10f, MeshType.GOLDEN);
+        SieveRegistry
+            .registerBinomial(Blocks.sand, new ItemStack(Blocks.cactus).getItem(), 0, 1, 0.15f, MeshType.NETHERITE);
 
         if (deadBush != null) {
             SieveRegistry.registerBinomial(Blocks.sand, deadBush, 0, 1, 0.08f, MeshType.SILK);

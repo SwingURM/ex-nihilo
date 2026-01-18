@@ -1,14 +1,15 @@
 package exnihilo.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import exnihilo.data.BlockData;
-import exnihilo.data.ModData;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.IIcon;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import exnihilo.data.BlockData;
+import exnihilo.data.ModData;
 
 public class BlockBeeTrap extends Block {
 
@@ -24,8 +25,7 @@ public class BlockBeeTrap extends Block {
     }
 
     @Override
-    public String getUnlocalizedName()
-    {
+    public String getUnlocalizedName() {
         return ModData.ID + "." + BlockData.BEE_TRAP_UNLOCALIZED_NAME;
     }
 

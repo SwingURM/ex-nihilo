@@ -1,5 +1,15 @@
 package exnihilo;
 
+import java.io.File;
+
+import net.minecraft.init.Blocks;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -35,15 +45,6 @@ import exnihilo.registries.HeatRegistry;
 import exnihilo.registries.SieveRegistry;
 import exnihilo.utils.CrookUtils;
 
-import java.io.File;
-
-import net.minecraft.init.Blocks;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 @Mod(modid = ModData.ID, name = ModData.NAME, version = Tags.VERSION)
 public class ExNihilo {
 
@@ -62,9 +63,11 @@ public class ExNihilo {
         log = LogManager.getLogger("Ex Nihilo");
         ModData.setMetadata(event.getModMetadata());
         ENPacketHandler.init();
-        config = new Configuration(new File(event.getModConfigurationDirectory().getAbsolutePath()
-            + File.separator
-            + "ExNihilo.cfg"));
+        config = new Configuration(
+            new File(
+                event.getModConfigurationDirectory()
+                    .getAbsolutePath() + File.separator
+                    + "ExNihilo.cfg"));
         config.load();
         ModData.load(config);
         WorldData.load(config);

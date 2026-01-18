@@ -1,17 +1,7 @@
 package exnihilo.blocks.tileentities;
 
-import exnihilo.data.ModData;
-import exnihilo.items.meshes.MeshType;
-import exnihilo.network.ENPacketHandler;
-import exnihilo.network.MessageSieve;
-import exnihilo.network.VanillaPacket;
-import exnihilo.registries.SieveRegistry;
-import exnihilo.registries.helpers.SiftingResult;
-
 import java.util.ArrayList;
 
-import exnihilo.utils.BlockInfo;
-import exnihilo.utils.ItemInfo;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
@@ -21,6 +11,16 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+
+import exnihilo.data.ModData;
+import exnihilo.items.meshes.MeshType;
+import exnihilo.network.ENPacketHandler;
+import exnihilo.network.MessageSieve;
+import exnihilo.network.VanillaPacket;
+import exnihilo.registries.SieveRegistry;
+import exnihilo.registries.helpers.SiftingResult;
+import exnihilo.utils.BlockInfo;
+import exnihilo.utils.ItemInfo;
 
 public class TileEntitySieve extends TileEntity {
 
@@ -41,8 +41,7 @@ public class TileEntitySieve extends TileEntity {
     }
 
     public void addSievable(Block block, int blockMeta) {
-        if (meshType == MeshType.NONE || currentStack != BlockInfo.EMPTY)
-            return;
+        if (meshType == MeshType.NONE || currentStack != BlockInfo.EMPTY) return;
         ItemInfo itemInfo = new ItemInfo(Item.getItemFromBlock(block), blockMeta);
         if (SieveRegistry.getSiftingOutput(itemInfo, this.meshType) != null) {
             this.currentStack = new BlockInfo(block, blockMeta);
@@ -51,22 +50,25 @@ public class TileEntitySieve extends TileEntity {
     }
 
     private void sendPacketUpdate() {
-        if (this.worldObj.isRemote)
-            return;
-        ENPacketHandler.sendToAllAround(new MessageSieve(
-            this.xCoord,
-            this.yCoord,
-            this.zCoord,
-            this.progress,
-            this.meshType.ordinal(),
-            this.getCurrentStack().getMeta(),
-            Block.blockRegistry.getNameForObject(this.getCurrentStack().getBlock())), this);
+        if (this.worldObj.isRemote) return;
+        ENPacketHandler.sendToAllAround(
+            new MessageSieve(
+                this.xCoord,
+                this.yCoord,
+                this.zCoord,
+                this.progress,
+                this.meshType.ordinal(),
+                this.getCurrentStack()
+                    .getMeta(),
+                Block.blockRegistry.getNameForObject(
+                    this.getCurrentStack()
+                        .getBlock())),
+            this);
         VanillaPacket.sendTileEntityUpdate(this);
     }
 
     public void ProcessContents() {
-        if (this.worldObj.isRemote)
-            return;
+        if (this.worldObj.isRemote) return;
 
         // 4 ticks is the same period of time as holding down right click
         if (this.worldObj.getTotalWorldTime() - lastSieveAction < 4) {
@@ -78,7 +80,9 @@ public class TileEntitySieve extends TileEntity {
         progress += PROCESSING_INTERVAL;
 
         if (progress >= 1) {
-            ItemInfo itemInfo = new ItemInfo(Item.getItemFromBlock(this.currentStack.getBlock()), this.currentStack.getMeta());
+            ItemInfo itemInfo = new ItemInfo(
+                Item.getItemFromBlock(this.currentStack.getBlock()),
+                this.currentStack.getMeta());
             final ArrayList<SiftingResult> rewards = SieveRegistry.getSiftingOutput(itemInfo, this.meshType);
             if (rewards != null && rewards.size() > 0) {
                 for (final SiftingResult reward : rewards) {
@@ -86,7 +90,12 @@ public class TileEntitySieve extends TileEntity {
                     if (reward.drop == null) continue;
                     int amount = calculateDropAmount(reward);
                     if (amount > 0) {
-                        final EntityItem entityitem = new EntityItem(this.worldObj, this.xCoord + 0.5D, this.yCoord + 1.5D, this.zCoord + 0.5D, new ItemStack(reward.drop.getItem(), amount, reward.drop.getMeta()));
+                        final EntityItem entityitem = new EntityItem(
+                            this.worldObj,
+                            this.xCoord + 0.5D,
+                            this.yCoord + 1.5D,
+                            this.zCoord + 0.5D,
+                            new ItemStack(reward.drop.getItem(), amount, reward.drop.getMeta()));
                         final double f3 = 0.05F;
                         entityitem.motionX = this.worldObj.rand.nextGaussian() * f3;
                         entityitem.motionY = 0.2D;
@@ -132,8 +141,7 @@ public class TileEntitySieve extends TileEntity {
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        if (compound.hasKey("stack"))
-            this.currentStack = BlockInfo.readFromNBT(compound.getCompoundTag("stack"));
+        if (compound.hasKey("stack")) this.currentStack = BlockInfo.readFromNBT(compound.getCompoundTag("stack"));
         this.meshType = MeshType.getValues()[compound.getShort("mesh")];
         this.progress = compound.getFloat("progress");
     }

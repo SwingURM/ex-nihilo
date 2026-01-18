@@ -1,18 +1,18 @@
 package exnihilo.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import java.util.List;
 
-import exnihilo.data.BlockData;
-import exnihilo.data.ModData;
 import net.minecraft.block.BlockSand;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import exnihilo.data.BlockData;
+import exnihilo.data.ModData;
 
 public class BlockDust extends BlockSand {
 
