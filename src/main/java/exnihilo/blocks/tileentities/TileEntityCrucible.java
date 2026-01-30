@@ -147,7 +147,9 @@ public class TileEntityCrucible extends TileEntity implements IFluidHandler, ISi
     public boolean addItem(ItemStack item) {
         if (!CrucibleRegistry.containsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage())) return false;
         Meltable meltable = CrucibleRegistry.getItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage());
-        if (!this.worldObj.isRemote && getCapacity() >= meltable.solidVolume && isFluidValid(meltable.fluid)) {
+        // Check if there's enough space for the solid volume (not fluid volume)
+        // The solids take up space in the crucible until they melt
+        if (!this.worldObj.isRemote && getSolidCapacity() >= meltable.solidVolume && isFluidValid(meltable.fluid)) {
             this.content = Block.getBlockFromItem(item.getItem());
             this.contentMeta = item.getItemDamage();
             this.solidVolume += meltable.fluidVolume;
@@ -201,6 +203,14 @@ public class TileEntityCrucible extends TileEntity implements IFluidHandler, ISi
 
     public float getCapacity() {
         return 10000.0F - this.solidVolume + this.fluidVolume + this.airVolume;
+    }
+
+    /**
+     * Returns the remaining capacity for solid items.
+     * Solids take up space until they melt into fluid.
+     */
+    public float getSolidCapacity() {
+        return 10000.0F - this.solidVolume - this.airVolume;
     }
 
     public float getMeltSpeed() {
@@ -369,7 +379,7 @@ public class TileEntityCrucible extends TileEntity implements IFluidHandler, ISi
             if (CrucibleRegistry.containsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage())) {
                 Meltable meltable = CrucibleRegistry
                     .getItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage());
-                if (getCapacity() >= meltable.solidVolume && isFluidValid(meltable.fluid)) addItem(item);
+                if (getSolidCapacity() >= meltable.solidVolume && isFluidValid(meltable.fluid)) addItem(item);
             }
     }
 
@@ -405,7 +415,7 @@ public class TileEntityCrucible extends TileEntity implements IFluidHandler, ISi
             if (CrucibleRegistry.containsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage())) {
                 Meltable meltable = CrucibleRegistry
                     .getItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage());
-                return getCapacity() >= meltable.solidVolume && isFluidValid(meltable.fluid);
+                return getSolidCapacity() >= meltable.solidVolume && isFluidValid(meltable.fluid);
             }
         return false;
     }
@@ -422,7 +432,7 @@ public class TileEntityCrucible extends TileEntity implements IFluidHandler, ISi
             if (CrucibleRegistry.containsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage())) {
                 Meltable meltable = CrucibleRegistry
                     .getItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage());
-                return getCapacity() >= meltable.solidVolume && isFluidValid(meltable.fluid);
+                return getSolidCapacity() >= meltable.solidVolume && isFluidValid(meltable.fluid);
             }
         return false;
     }
