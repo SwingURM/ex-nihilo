@@ -40,8 +40,9 @@ dependencies {
     api("com.github.GTNewHorizons:ForestryMC:4.6.14:dev")
     api("com.github.GTNewHorizons:TinkersConstruct:1.10.8-GTNH:dev")
     api("com.github.GTNewHorizons:NotEnoughItems:2.7.69-GTNH:dev")
-    // implementation files("etfuturum-2.6.2.29-GTNH-pre-dev.jar")
-    // implementation files("excompressum-1.7.10-1.2.2.jar")
+    if (!System.getenv().containsKey("CI") && !System.getenv().containsKey("GITHUB_ACTIONS")) {
+        devOnlyNonPublishable(project.files("etfuturum-2.6.2.28-GTNH-dev.jar"))
+    }
     compileOnly("org.jetbrains:annotations:24.1.0")
     annotationProcessor("org.jetbrains:annotations:24.1.0")
 }
